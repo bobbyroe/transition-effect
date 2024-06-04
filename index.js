@@ -42,3 +42,5 @@ function animate() {
   requestAnimationFrame(animate);
   transition.render(clock.getDelta());
 }
+
+window.addEventListener("pointerdown", transition.handleClick, false);

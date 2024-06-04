@@ -82,19 +82,19 @@ export function getTransition({ renderer, sceneA, sceneB }) {
   material.uniforms.tDiffuse1.value = sceneA.fbo.texture;
   material.uniforms.tDiffuse2.value = sceneB.fbo.texture;
 
-  new TWEEN.Tween(transitionParams)
-    .to({ transition: 1 }, 4500)
-    .repeat(Infinity)
-    .delay(2000)
-    .yoyo(true)
-    .start();
+  let goalTrans = 1;
+  const transition = new TWEEN.Tween(transitionParams)
+    .to({ transition: goalTrans }, 4500)
+    // .delay(2000)
+    // .yoyo(true)
+    .onComplete(() => { goalTrans = goalTrans === 1 ? 0 : 1; });
   let needsTextureChange = false;
 
   const render = (delta) => {
     // Transition animation
     if (transitionParams.animate) {
       TWEEN.update();
-
+      console.log(goalTrans, transitionParams.transition);
       // Change the current alpha texture after each transition
       if (transitionParams.cycle) {
         if (
@@ -115,7 +115,6 @@ export function getTransition({ renderer, sceneA, sceneB }) {
         needsTextureChange = true;
       }
     }
-
     material.uniforms.mixRatio.value = transitionParams.transition;
 
     // Prevent render both scenes when it's not necessary
@@ -134,5 +133,9 @@ export function getTransition({ renderer, sceneA, sceneB }) {
       renderer.render(scene, camera);
     }
   };
-  return { render };
+
+  function handleClick() {
+    transition.start();
+  }
+  return { handleClick, render };
 }
