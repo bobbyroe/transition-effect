@@ -4,21 +4,19 @@ const objCount = 5000;
 function getMeshProps() {
   const arr = [];
   for (let i = 0; i < objCount; i += 1) {
-    arr.push(
-      {
-        position: {
-          x: Math.random() * 10000 - 5000,
-          y: Math.random() * 6000 - 3000,
-          z: Math.random() * 8000 - 4000
-        },
-        rotation: {
-          x: Math.random() * 2 * Math.PI,
-          y: Math.random() * 2 * Math.PI,
-          z: Math.random() * 2 * Math.PI,
-        },
-        scale: Math.random() * 200 + 100
-      }
-    )
+    arr.push({
+      position: {
+        x: Math.random() * 10000 - 5000,
+        y: Math.random() * 6000 - 3000,
+        z: Math.random() * 8000 - 4000,
+      },
+      rotation: {
+        x: Math.random() * 2 * Math.PI,
+        y: Math.random() * 2 * Math.PI,
+        z: Math.random() * 2 * Math.PI,
+      },
+      scale: Math.random() * 200 + 100,
+    });
   }
   return arr;
 }
@@ -38,25 +36,27 @@ function getMesh(material, needsAnimatedColor = false) {
     dummy.position.y = props.position.y;
     dummy.position.z = props.position.z;
 
-    dummy.rotation.x = props.rotation.x;
-    dummy.rotation.y = props.rotation.y;
-    dummy.rotation.z = props.rotation.z;
-
     dummy.scale.set(props.scale, props.scale, props.scale);
 
     dummy.updateMatrix();
 
     mesh.setMatrixAt(i, dummy.matrix);
-    if (needsAnimatedColor) { mesh.setColorAt(i, color.setScalar(0.1 + 0.9 * Math.random())); }
+    if (needsAnimatedColor) {
+      mesh.setColorAt(i, color.setScalar(0.1 + 0.9 * Math.random()));
+    }
   }
   return mesh;
 }
 
-export function getFXScene({ renderer, material, clearColor, needsAnimatedColor = false }) {
-
+export function getFXScene({
+  renderer,
+  material,
+  clearColor,
+  needsAnimatedColor = false,
+}) {
   const w = window.innerWidth;
   const h = window.innerHeight;
-  const camera = new THREE.PerspectiveCamera( 50, w / h, 1, 10000);
+  const camera = new THREE.PerspectiveCamera(50, w / h, 1, 10000);
   camera.position.z = 2000;
 
   // Setup scene
@@ -77,7 +77,7 @@ export function getFXScene({ renderer, material, clearColor, needsAnimatedColor 
     if (needsAnimatedColor) {
       material.color.setHSL(0.1 + 0.5 * Math.sin(0.0002 * Date.now()), 1, 0.5);
     }
-  }
+  };
 
   const render = (delta, rtt) => {
     update(delta);
@@ -95,4 +95,4 @@ export function getFXScene({ renderer, material, clearColor, needsAnimatedColor 
   };
 
   return { fbo, render, update };
-};
+}

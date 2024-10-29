@@ -10,11 +10,17 @@ const transitionParams = {
 };
 
 export function getTransition({ renderer, sceneA, sceneB }) {
-
   const scene = new THREE.Scene();
   const w = window.innerWidth;
   const h = window.innerHeight;
-  const camera = new THREE.OrthographicCamera(w / -2, w / 2, h / 2, h / -2, -10, 10);
+  const camera = new THREE.OrthographicCamera(
+    w / -2,
+    w / 2,
+    h / 2,
+    h / -2,
+    -10,
+    10,
+  );
 
   const textures = [];
   const loader = new THREE.TextureLoader();

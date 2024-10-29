@@ -16,17 +16,17 @@ function init() {
   container.appendChild(renderer.domElement);
 
   const materialA = new THREE.MeshBasicMaterial({
-    color: 0x00FF00,
-    wireframe: true
+    color: 0x00ff00,
+    wireframe: true,
   });
   const materialB = new THREE.MeshStandardMaterial({
-    color: 0xFF9900,
+    color: 0xff9900,
     flatShading: true,
   });
   const sceneA = getFXScene({
     renderer,
     material: materialA,
-    clearColor: 0x000000
+    clearColor: 0x000000,
   });
   const sceneB = getFXScene({
     renderer,
